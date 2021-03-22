@@ -62,10 +62,6 @@ class PublicKey {
         this.e = e;
         this.phiofN = phiofn;
     }
-
-    public BigInteger getN() { return n; }
-    public BigInteger getE() { return e; }
-    public BigInteger getPhiofN() { return phiofN; }
     public void save() throws IOException {
         Files.write(Paths.get("pk.txt"), ("("+n+","+e+")").getBytes());
     }
@@ -78,9 +74,6 @@ class PrivateKey{
         this.n = n;
         this.d = d;
     }
-
-    public BigInteger getN() { return n; }
-    public BigInteger getD() { return d; }
     public void save() throws IOException{
         Files.write(Paths.get("sk.txt"), ("("+n+","+d+")").getBytes());
     }
