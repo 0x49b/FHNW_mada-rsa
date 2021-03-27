@@ -1,80 +1,26 @@
-import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Random;
+import ch.fhnw.mada.fthievent.Decryptor;
+import ch.fhnw.mada.fthievent.Encryptor;
+import ch.fhnw.mada.fthievent.Generate;
 
+/**
+ * RSA Implementierung von Florian Thiévent
+ *
+ * Verwendung:
+ * - Sollen beide Schlüsselpaare generiert, ein Text verschlüsselt und wieder entschlüsselt werden, müssen alle Teile ausgeführt werden
+ * - Soll ein Chiffre Text mit einem Schlüssel entschlüsselt werden, müssen die Files in den root kopiert werden als chiffre.txt und sk.txt. Dann die Zeilen 14 - 18 auskommentieren.
+ * - Das Programm arbeitet mit 2048 Bit Schlüsseln. Es ist möglich, dass im Generate Konstrukor eine ander Bit Länge angegeben wird.
+ */
 public class RSAMain {
+    public static void main(String[] args) throws Exception {
+        Generate teil1 = new Generate();
+        teil1.generate();
 
-    public static void main(String[] args) throws IOException{
+        Encryptor teil2 = new Encryptor();
+        teil2.encrypt();
 
-        final int BIT_LENGTH = 2048;
+        Decryptor teil3 = new Decryptor();
+        teil3.decrypt();
 
-
-        System.out.println("Starting RSA Public Key");
-        // get two new primenumbers based on the BIT_LENGTH
-        BigInteger p = new BigInteger(BIT_LENGTH, new Random());
-        BigInteger q = new BigInteger(BIT_LENGTH, new Random());
-        System.out.println("Prime Number p: " + p);
-        System.out.println("Prime Number q: " + q);
-
-        // define n by multiply p with q
-        BigInteger n = p.multiply(q);
-        System.out.println("n: " + n);
-
-        // PHI(N)
-        BigInteger phiofn = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
-
-        BigInteger e = new BigInteger(BIT_LENGTH, new Random());
-        while (e.compareTo(phiofn) >= 0) {
-            e = new BigInteger(BIT_LENGTH, new Random());
-        }
-
-        // Make PublicKey Class to "save"
-        PublicKey publickey = new PublicKey(n,e,phiofn);
-
-        // Create PrivateKey
-        System.out.println("RSA Private Key");
-
-        BigInteger d = extendedEuclid(phiofn, e);
-        PrivateKey privatekey = new PrivateKey(n,d);
-
-        publickey.save();
-        privatekey.save();
-
-    }
-
-    public static BigInteger extendedEuclid(BigInteger a, BigInteger b) {
-        while(!b.equals(BigInteger.ZERO)){
-            BigInteger intermediate = a % b;
-            a = b;
-            b = c;
-        }
-        return a;
     }
 }
 
-class PublicKey {
-    private BigInteger n, e, phiofN;
-
-    public PublicKey(BigInteger n, BigInteger e, BigInteger phiofn) {
-        this.n = n;
-        this.e = e;
-        this.phiofN = phiofn;
-    }
-    public void save() throws IOException {
-        Files.write(Paths.get("pk.txt"), ("("+n+","+e+")").getBytes());
-    }
-}
-
-
-class PrivateKey{
-    private BigInteger n, d;
-    public PrivateKey(BigInteger n, BigInteger d){
-        this.n = n;
-        this.d = d;
-    }
-    public void save() throws IOException{
-        Files.write(Paths.get("sk.txt"), ("("+n+","+d+")").getBytes());
-    }
-}
