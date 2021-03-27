@@ -17,7 +17,7 @@ public class Helper {
     }
 
     // Es wäre einfacher wenn man das modPow von BigInteger verwenden würde :-)
-    // Mit Hilfe von https://stackoverflow.com/questions/22392541/modular-exponentiation-in-java-the-algorithm-gives-a-wrong-answer
+    // Mit Hilfe von https://stackoverflow.com/questions/22392541/modular-exponentiation-in-java-the-algorithm-gives-a-wrong-answer nach langer Testphase
     public static BigInteger fastExponentiate(BigInteger base, BigInteger power, BigInteger modulo) {
         BigInteger result = new BigInteger("1");
         base = base.mod(modulo);
