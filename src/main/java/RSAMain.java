@@ -14,13 +14,13 @@ public class RSAMain {
     public static void main(String[] args) throws Exception {
 
         long startTime = System.currentTimeMillis();
-
+        /**
         Generate teil1 = new Generate();
         teil1.generate();
 
         Encryptor teil2 = new Encryptor();
         teil2.encrypt();
-
+        */
         Decryptor teil3 = new Decryptor();
         teil3.decrypt();
 

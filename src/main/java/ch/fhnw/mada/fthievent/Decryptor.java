@@ -34,7 +34,7 @@ public class Decryptor {
 
         Files.write(Paths.get(FILENAME_OUT), decrypted.toString().getBytes());
         System.out.println("*** Entschlüsselter Text: " + decrypted.toString() + " ***");
-        System.out.println("--- Decryptor ist fertig, der Chiffre Text findet sich unter " + Paths.get(".").toAbsolutePath().normalize().toString() + System.getProperty("file.separator") + FILENAME_OUT + " ---");
+        System.out.println("--- Decryptor ist fertig, der Klartext findet sich unter " + Paths.get(".").toAbsolutePath().normalize().toString() + System.getProperty("file.separator") + FILENAME_OUT + " ---");
 
     }
 
